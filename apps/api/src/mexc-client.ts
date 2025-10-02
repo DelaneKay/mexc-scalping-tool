@@ -3,7 +3,7 @@ import { SymbolInfo, Kline, Timeframe, UniverseFilter } from '@mexc-scalping/sha
 import { RateLimiter, CircuitBreaker, retry } from '@mexc-scalping/shared';
 
 export class MexcClient {
-  private exchange: ccxt.mexc;
+  private exchange: any; // ccxt.mexc
   private rateLimiter: RateLimiter;
   private circuitBreaker: CircuitBreaker;
   
@@ -33,19 +33,20 @@ export class MexcClient {
       const symbols: SymbolInfo[] = [];
       
       for (const [symbol, market] of Object.entries(markets)) {
+        const marketData = market as any;
         if (
-          market.type === 'swap' &&
-          market.quote === 'USDT' &&
-          market.active
+          marketData.type === 'swap' &&
+          marketData.quote === 'USDT' &&
+          marketData.active
         ) {
           // Fetch 24h ticker data
           const ticker = await this.exchange.fetchTicker(symbol);
           
           symbols.push({
-            symbol: market.symbol,
-            baseAsset: market.base,
-            quoteAsset: market.quote,
-            status: market.active ? 'TRADING' : 'INACTIVE',
+            symbol: marketData.symbol,
+            baseAsset: marketData.base,
+            quoteAsset: marketData.quote,
+            status: marketData.active ? 'TRADING' : 'INACTIVE',
             volume24h: ticker.quoteVolume || 0,
             priceChange24h: ticker.change || 0,
             priceChangePercent24h: ticker.percentage || 0,
@@ -129,7 +130,7 @@ export class MexcClient {
         limit
       );
       
-      return ohlcv.map(([timestamp, open, high, low, close, volume]) => ({
+      return ohlcv.map(([timestamp, open, high, low, close, volume]: any[]) => ({
         timestamp,
         open,
         high,
