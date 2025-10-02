@@ -10,6 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": false
   },
-  "include": ["src/**/*", "netlify/functions/**/*"],
-  "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules", "netlify", "**/*.test.ts", "**/*.spec.ts"]
 }
