@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && cd packages/shared && npm run build && cd ../../apps/web && npm install && npm run build && cd ../../functions && npm install"
+  command = "npm install && npm run build && cd functions && npm install"
   publish = "apps/web/dist"
 
 [build.environment]
