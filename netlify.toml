@@ -1,0 +1,60 @@
+[build]
+  command = "pnpm install --frozen-lockfile && pnpm build"
+  publish = "apps/web/dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--prefix=/dev/null"
+
+[functions]
+  directory = "apps/api/netlify/functions"
+  node_bundler = "esbuild"
+
+# API Routes
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA Fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Scheduled Functions
+[[plugins]]
+  package = "@netlify/plugin-scheduled-functions"
+
+  [plugins.inputs]
+    [plugins.inputs.backfill]
+      schedule = "0 * * * *"  # Every hour
+      
+# Environment Variables (set in Netlify dashboard)
+# DISCORD_WEBHOOK_URL - Optional Discord webhook for notifications
+# MEXC_API_KEY - Optional MEXC API key (not required for public data)
+# MEXC_API_SECRET - Optional MEXC API secret
+# MEXC_SANDBOX - Set to "true" for sandbox mode

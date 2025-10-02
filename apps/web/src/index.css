@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-crypto-dark text-white font-sans;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-crypto-darker;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-crypto-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
+}
+
+@layer components {
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+  }
+  
+  .glass-card {
+    @apply bg-crypto-card/80 backdrop-blur-sm border border-crypto-border/50 rounded-lg;
+  }
+  
+  /* Button variants */
+  .btn-primary {
+    @apply bg-crypto-accent hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-crypto-card hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors border border-crypto-border;
+  }
+  
+  .btn-ghost {
+    @apply hover:bg-white/5 text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  
+  /* Input styles */
+  .input {
+    @apply bg-crypto-card border border-crypto-border rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crypto-accent focus:border-transparent;
+  }
+  
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-burst {
+    @apply bg-burst-500/20 text-burst-500 border border-burst-500/30;
+  }
+  
+  .badge-volatile {
+    @apply bg-volatile-500/20 text-volatile-500 border border-volatile-500/30;
+  }
+  
+  .badge-losing {
+    @apply bg-losing-500/20 text-losing-500 border border-losing-500/30;
+  }
+  
+  .badge-normal {
+    @apply bg-gray-500/20 text-gray-400 border border-gray-500/30;
+  }
+  
+  /* Table styles */
+  .table-header {
+    @apply bg-crypto-card/50 border-b border-crypto-border text-gray-300 text-sm font-medium;
+  }
+  
+  .table-row {
+    @apply border-b border-crypto-border/30 hover:bg-crypto-card/30 transition-colors;
+  }
+  
+  .table-cell {
+    @apply px-4 py-3 text-sm;
+  }
+  
+  /* Animation utilities */
+  .animate-number {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+    }
+  }
+  
+  /* State transition animations */
+  .state-transition {
+    @apply animate-pulse-soft;
+  }
+  
+  /* Delta chip styles */
+  .delta-positive {
+    @apply text-crypto-success bg-crypto-success/10 border border-crypto-success/20;
+  }
+  
+  .delta-negative {
+    @apply text-crypto-danger bg-crypto-danger/10 border border-crypto-danger/20;
+  }
+  
+  .delta-neutral {
+    @apply text-gray-400 bg-gray-500/10 border border-gray-500/20;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent;
+  }
+  
+  .border-gradient {
+    border-image: linear-gradient(90deg, #3b82f6, #a855f7) 1;
+  }
+  
+  /* Number formatting */
+  .font-mono-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
