@@ -6,7 +6,7 @@
   NODE_VERSION = "20"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "apps/api/netlify/functions"
   node_bundler = "esbuild"
 
 # API Routes
