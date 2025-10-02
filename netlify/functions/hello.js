@@ -1,4 +1,6 @@
 exports.handler = async (event, context) => {
+  console.log('Function called:', event.path);
+  
   return {
     statusCode: 200,
     headers: {
@@ -6,8 +8,9 @@ exports.handler = async (event, context) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      message: 'Hello from Netlify Functions!',
-      timestamp: Date.now(),
+      message: 'Hello World!',
+      method: event.httpMethod,
+      path: event.path
     }),
   };
 };
