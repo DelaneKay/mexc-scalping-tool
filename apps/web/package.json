@@ -13,7 +13,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@mexc-scalping/shared": "workspace:*",
+    "@mexc-scalping/shared": "*",
     "@tanstack/react-query": "^5.8.0",
     "@tanstack/react-virtual": "^3.0.0",
     "framer-motion": "^10.16.0",
