@@ -1,12 +1,12 @@
 [build]
-  command = "npm install && cd packages/shared && npm install && npm run build && cd ../../apps/web && npm install && npm run build"
+  command = "npm install && npm run build"
   publish = "apps/web/dist"
 
 [build.environment]
   NODE_VERSION = "20"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "functions"
   node_bundler = "esbuild"
 
 # API Routes
