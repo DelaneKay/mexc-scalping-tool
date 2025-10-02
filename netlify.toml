@@ -7,7 +7,7 @@
   NPM_FLAGS = "--prefix=/dev/null"
 
 [functions]
-  directory = "apps/api/netlify/functions"
+  directory = "netlify/functions"
   node_bundler = "esbuild"
 
 # API Routes
