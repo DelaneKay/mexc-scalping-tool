@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm install --frozen-lockfile && pnpm build"
+  command = "npm install && npm run build"
   publish = "apps/web/dist"
 
 [build.environment]
@@ -48,10 +48,6 @@
 # Scheduled Functions
 [[plugins]]
   package = "@netlify/plugin-scheduled-functions"
-
-  [plugins.inputs]
-    [plugins.inputs.backfill]
-      schedule = "0 * * * *"  # Every hour
       
 # Environment Variables (set in Netlify dashboard)
 # DISCORD_WEBHOOK_URL - Optional Discord webhook for notifications
