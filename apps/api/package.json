@@ -12,7 +12,7 @@
     "deploy": "netlify deploy --prod"
   },
   "dependencies": {
-    "@mexc-scalping/shared": "file:../../packages/shared",
+    "@mexc-scalping/shared": "workspace:*",
     "@netlify/functions": "^2.4.0",
     "ccxt": "^4.1.0",
     "node-fetch": "^3.3.0",

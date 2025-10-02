@@ -1,4 +1,4 @@
-import { Handler, schedule } from '@netlify/functions';
+import { Handler } from '@netlify/functions';
 import { MexcClient } from '../../src/mexc-client';
 import { DataProcessor } from '../../src/data-processor';
 import { validateEnv } from '@mexc-scalping/shared';
@@ -148,8 +148,5 @@ const handler: Handler = async (event, context) => {
   }
 };
 
-// Schedule the function to run every hour
-export const handler = schedule('0 * * * *', handler);
-
-// Also export for manual invocation
-export { handler as backfillHandler };
+// Export the handler for manual invocation
+export { handler };

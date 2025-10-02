@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm run build"
+  command = "pnpm install && pnpm run build"
   publish = "apps/web/dist"
 
 [build.environment]
@@ -45,10 +45,6 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Scheduled Functions
-[[plugins]]
-  package = "@netlify/plugin-scheduled-functions"
-      
 # Environment Variables (set in Netlify dashboard)
 # DISCORD_WEBHOOK_URL - Optional Discord webhook for notifications
 # MEXC_API_KEY - Optional MEXC API key (not required for public data)
