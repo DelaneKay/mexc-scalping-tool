@@ -4,7 +4,7 @@ import {
   TechnicalIndicators as TI,
   ScanResult,
   Timeframe,
-  TechnicalIndicators,
+  IndicatorCalculator,
   ScoringEngine,
   defaultConfig,
 } from '@mexc-scalping/shared';
@@ -30,7 +30,7 @@ export class DataProcessor {
 
       try {
         const closes = klines.map(k => k.close);
-        const realizedVols = TechnicalIndicators.realizedVolatility(closes, 20);
+        const realizedVols = IndicatorCalculator.realizedVolatility(closes, 20);
         if (realizedVols.length > 0) {
           allVolatilities.push(realizedVols[realizedVols.length - 1]);
         }
@@ -88,31 +88,31 @@ export class DataProcessor {
     const volumes = klines.map(k => k.volume);
 
     // RSI
-    const rsiValues = TechnicalIndicators.rsi(closes, 14);
+    const rsiValues = IndicatorCalculator.rsi(closes, 14);
     const rsi14 = rsiValues[rsiValues.length - 1] || 50;
 
     // ATR
-    const atrValues = TechnicalIndicators.atr(klines, 14);
+    const atrValues = IndicatorCalculator.atr(klines, 14);
     const atr = atrValues[atrValues.length - 1] || 0;
     const atrPercent = (atr / closes[closes.length - 1]) * 100;
 
     // ADX
-    const adxData = TechnicalIndicators.adx(klines, 14);
+    const adxData = IndicatorCalculator.adx(klines, 14);
     const adx14 = adxData.adx[adxData.adx.length - 1] || 0;
 
     // EMAs
-    const ema20Values = TechnicalIndicators.ema(closes, 20);
-    const ema50Values = TechnicalIndicators.ema(closes, 50);
+    const ema20Values = IndicatorCalculator.ema(closes, 20);
+    const ema50Values = IndicatorCalculator.ema(closes, 50);
     const ema20 = ema20Values[ema20Values.length - 1] || closes[closes.length - 1];
     const ema50 = ema50Values[ema50Values.length - 1] || closes[closes.length - 1];
 
     // Donchian Channels
-    const donchian = TechnicalIndicators.donchian(klines, 20);
+    const donchian = IndicatorCalculator.donchian(klines, 20);
     const donchianHigh20 = donchian.high[donchian.high.length - 1] || highs[highs.length - 1];
     const donchianLow20 = donchian.low[donchian.low.length - 1] || lows[lows.length - 1];
 
     // Volume EMA
-    const volumeEmaValues = TechnicalIndicators.ema(volumes, 20);
+    const volumeEmaValues = IndicatorCalculator.ema(volumes, 20);
     const volumeEma = volumeEmaValues[volumeEmaValues.length - 1] || volumes[volumes.length - 1];
 
     return {

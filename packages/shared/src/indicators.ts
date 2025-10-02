@@ -1,6 +1,6 @@
 import { Kline } from './types';
 
-export class TechnicalIndicators {
+export class IndicatorCalculator {
   /**
    * Simple Moving Average
    */

@@ -1,5 +1,5 @@
 import { Kline, TechnicalIndicators as TI, VolatilityMetrics, BurstAnalysis, SignalState } from './types';
-import { TechnicalIndicators } from './indicators';
+import { IndicatorCalculator } from './indicators';
 import { defaultConfig } from './env';
 
 export class ScoringEngine {
@@ -38,7 +38,7 @@ export class ScoringEngine {
     const volumes = klines.map(k => k.volume);
     
     // Realized volatility calculation
-    const realizedVols = TechnicalIndicators.realizedVolatility(closes, 20);
+    const realizedVols = IndicatorCalculator.realizedVolatility(closes, 20);
     const realizedVolatility = realizedVols[realizedVols.length - 1] || 0;
     
     // Volatility Z-Score vs universe
@@ -47,8 +47,8 @@ export class ScoringEngine {
     
     if (universeVolatilities.length > 0) {
       const universeMedian = this.median(universeVolatilities);
-      const universeMad = TechnicalIndicators.mad(universeVolatilities);
-      volatilityZScore = TechnicalIndicators.zScore(realizedVolatility, universeMedian, universeMad);
+      const universeMad = IndicatorCalculator.mad(universeVolatilities);
+      volatilityZScore = IndicatorCalculator.zScore(realizedVolatility, universeMedian, universeMad);
       volatilityScore = Math.max(0, Math.min(100, 50 + volatilityZScore * 20));
     }
     
@@ -65,11 +65,11 @@ export class ScoringEngine {
     
     // Momentum calculation
     const rsiNormalized = (indicators.rsi14 - 50) / 50; // -1 to 1
-    const rocValues = TechnicalIndicators.roc(closes, 3);
+    const rocValues = IndicatorCalculator.roc(closes, 3);
     const roc = rocValues[rocValues.length - 1] || 0;
     const rocNormalized = Math.tanh(roc / 5); // Normalize ROC
     const momentum = (rsiNormalized + rocNormalized) / 2;
-    const momentumNormalized = TechnicalIndicators.normalize(momentum);
+    const momentumNormalized = IndicatorCalculator.normalize(momentum);
     
     // Trend quality (ADX)
     const trendQuality = indicators.adx14;
@@ -95,7 +95,7 @@ export class ScoringEngine {
    */
   static calculateRawBurstScore(metrics: VolatilityMetrics): number {
     const weights = defaultConfig.burstWeights;
-    const volatilityComponent = TechnicalIndicators.normalize(metrics.volatilityZScore);
+    const volatilityComponent = IndicatorCalculator.normalize(metrics.volatilityZScore);
     
     return (
       weights.volatilityZScore * volatilityComponent +
@@ -132,7 +132,7 @@ export class ScoringEngine {
     ) {
       // Check if volatility is trending up over last 3 bars
       const closes = klines.map(k => k.close);
-      const recentVols = TechnicalIndicators.realizedVolatility(closes.slice(-10), 5);
+      const recentVols = IndicatorCalculator.realizedVolatility(closes.slice(-10), 5);
       if (recentVols.length >= 3) {
         const isVolTrendingUp = recentVols[recentVols.length - 1] > recentVols[recentVols.length - 3];
         if (isVolTrendingUp) {
@@ -151,7 +151,7 @@ export class ScoringEngine {
     
     // Check LOSING_VOL conditions
     const closes = klines.map(k => k.close);
-    const recentVols = TechnicalIndicators.realizedVolatility(closes.slice(-10), 5);
+    const recentVols = IndicatorCalculator.realizedVolatility(closes.slice(-10), 5);
     if (recentVols.length >= 5) {
       const volDrop = recentVols[recentVols.length - 5] - recentVols[recentVols.length - 1];
       const normalizedVolDrop = volDrop / (recentVols[recentVols.length - 5] || 1);
